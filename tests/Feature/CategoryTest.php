@@ -28,4 +28,10 @@ class CategoryTest extends TestCase
 
         
     }
+
+    public function testReturnCategories() {
+        $this->get('/categories')->assertJsonFragment([
+            'categories' => Category::all()
+        ]);
+    }
 }

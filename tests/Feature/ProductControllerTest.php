@@ -25,7 +25,7 @@ class ProductControllerTest extends TestCase
     {
         $this->withoutMiddleware();
       
-        $response = $this->get('/product');
+        $response = $this->get('/products');
         $response->assertStatus(200);
         $response->assertJsonFragment(['products' => Product::all()]);
       
