@@ -7,6 +7,7 @@ use App\Product;
 
 class ProductController extends Controller
 {
+    
     public function index() {
 
         return response()->json(['products' => Product::all()]);
