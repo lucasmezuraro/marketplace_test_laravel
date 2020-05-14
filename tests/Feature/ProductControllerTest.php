@@ -49,4 +49,13 @@ class ProductControllerTest extends TestCase
             'category_id' => 2
         ]);
     }
+
+    public function registerProducts() {
+
+        $response = $this->post('/api/product', ['description' => 'Computador LG 4GB',
+        'price' => 2000.00,
+        'category_id' => 2]);
+
+        $response->assertJsonFragment(['message' => 'registrated with success!']);
+    }
 }
