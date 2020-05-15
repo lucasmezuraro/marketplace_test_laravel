@@ -66,7 +66,9 @@ class ProductController extends Controller
             return Response::json(['errors' => $validator->errors()->all()], 422);
         }
        
+    }
 
+    public function delete($id, Request $request) {
 
     }
 

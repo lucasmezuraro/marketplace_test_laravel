@@ -71,4 +71,15 @@ class ProductControllerTest extends TestCase
         $response = $this->put('/api/product/1', $data);
         $response->assertJsonFragment(['message' => 'product updated with success!']);
     }
+
+    public function testUpdateProductError() {
+        $data = [
+            'product' => [
+                'description' => 'Computador 2'
+            ]
+        ];
+
+        $response = $this->put('/api/product/1', $data);
+        $response->assertJsonFragment(['error' => 'product not changed']);
+    }
 }
