@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use Validator;
 use Response;
+use DB;
 
 class ProductController extends Controller
 {
@@ -32,15 +33,39 @@ class ProductController extends Controller
     }
 
     public function update($id, Request $request) {
-
-        /* $rules = [
-            'product' => 'required'
+       /*  $product = Product::find($id);
+        return $product->getAttributes(); */
+        
+         $rules = [
+            'product' => 'required',
+            'description' => 'sometimes',
+            'price' => 'sometimes|integer',
+            'category_id' => 'sometimes|integer|exists:categories, id'
         ];
 
-        $validator = Validator::make($request, $rules);
+         $validator = Validator::make($request->all(), $rules); 
 
+        if ($validator->passes()) {
+            $product = Product::find($id);
+            if ($product) {
+                
+                $product->fill($request->product)->save();
+                
+                if ($product->wasChanged()) {
+                    return Response::json(['message' => 'product updated with success!'], 200);
+                }else {
+                    return Response::json(['error' => 'product not changed'], 500);
+                }
 
-        return $request->all(); */
+            }else {
+                return Response::json(['error' => 'product not found!'], 404);
+            }
+
+            
+        }else {
+            return Response::json(['errors' => $validator->errors()->all()], 422);
+        }
+       
 
 
     }
