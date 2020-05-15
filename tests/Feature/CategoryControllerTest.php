@@ -30,8 +30,22 @@ class CategoryTest extends TestCase
     }
 
     public function testReturnCategories() {
-        $this->get('/categories')->assertJsonFragment([
+        $this->get('/api/categories')->assertJsonFragment([
             'categories' => Category::all()
         ]);
+    }
+
+    public function testRegisterCategory() {
+
+        $data = [
+                    'category' => 
+                        [
+                            'description' => 'Informática'
+                        ]
+                ];
+
+        $response = $this->post('/api/category', $data,  ['contentType' => 'application/json']);
+
+        $response->assertStatus(201);
     }
 }

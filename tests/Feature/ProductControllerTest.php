@@ -13,49 +13,62 @@ use App\Category;
 
 class ProductControllerTest extends TestCase
 {
-
+    
     use WithoutMiddleware;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+
+
     public function testReturnProducts()
     {
         $this->withoutMiddleware();
       
-        $response = $this->get('/products');
+        $response = $this->get('/api/products');
         $response->assertStatus(200);
         $response->assertJsonFragment(['products' => Product::all()]);
       
     }
 
-    public function testInsertProducts() {
+    public function testInsertProduct() {
 
-        Category::create([
+        $category = Category::create([
             'description' => 'Informática'
         ]);
 
         $product = Product::create([
             'description' => 'Computador Positivo',
-            'price' => 2199.90,
-            'category_id' => 2
+            'price' => 2199.95,
+            'category_id' => $category->id
         ]);
 
         $this->assertDatabaseHas('products', [
             'description' => 'Computador Positivo',
-            'price' => 2199.90,
-            'category_id' => 2
+            'price' => 2199.95,
+            'category_id' => $category->id
         ]);
     }
 
-    public function registerProducts() {
+    public function testRegisterProduct() {
 
-        $response = $this->post('/api/product', ['description' => 'Computador LG 4GB',
-        'price' => 2000.00,
-        'category_id' => 2]);
+        $data = [
+            'product' => [
+                'description' => 'Computador LG 4gb',
+                'price' => 2000.00,
+                'category_id' => 3
+            ]
+        ];
+        
+        $response = $this->post('/api/product', $data);
+        $response->assertJsonFragment(['message' => 'product registrated with success!']);
+    }
 
-        $response->assertJsonFragment(['message' => 'registrated with success!']);
+    public function testUpdateProduct() {
+        $data = [
+            'product' => [
+                'description' => 'Computador 2'
+            ]
+        ];
+
+        $response = $this->put('/api/product/1', $data);
+        $response->assertJsonFragment(['message' => 'product updated with success!']);
     }
 }

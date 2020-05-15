@@ -11,9 +11,7 @@ class ProductController extends Controller
 {
     
     public function index() {
-
         return response()->json(['products' => Product::all()]);
-
     }
 
     public function create(Request $request) {
@@ -27,15 +25,24 @@ class ProductController extends Controller
         $validation = Validator::make($request->product, $rules);
 
         if ($validation->passes()) {
-            return Response::json(['message' => $request->get('product')], 201);
+            return Response::json(['message' => 'product registrated with success!'], 201);
         }else {
             return Response::json(['errors' => $validation->errors()->all()], 422);
         }
+    }
 
-        
-       /*  $product = Product::create([
-            'description' => 
-        ]); */
+    public function update($id, Request $request) {
+
+        /* $rules = [
+            'product' => 'required'
+        ];
+
+        $validator = Validator::make($request, $rules);
+
+
+        return $request->all(); */
+
+
     }
 
 }
