@@ -11,7 +11,21 @@ use App\Category;
 
 class CategoryTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
+    
+
+    protected $category;
+
+    public function setUp() : void {
+        parent::setUp();
+
+        $this->category = Category::create([
+            'description' => 'Cozinha'
+        ]);
+    }
+    
+    
+    
     /**
      * A basic feature test example.
      *
@@ -19,20 +33,12 @@ class CategoryTest extends TestCase
      */
     public function testInsertCategory()
     {
-        
-        $category = Category::create([
-            'description' => 'Cozinha'
-        ]);
-        
         $this->assertDatabaseHas('categories', ['description' => 'Cozinha']);
-
-        
     }
 
     public function testReturnCategories() {
-        $this->get('/api/categories')->assertJsonFragment([
-            'categories' => Category::all()
-        ]);
+        $response = $this->get('/api/categories');
+        $response->assertStatus(200);
     }
 
     public function testRegisterCategory() {
@@ -44,8 +50,33 @@ class CategoryTest extends TestCase
                         ]
                 ];
 
-        $response = $this->post('/api/category', $data,  ['contentType' => 'application/json']);
+        $response = $this->post('/api/category', $data);
 
         $response->assertStatus(201);
+    }
+
+    public function testUpdateCategory() {
+        $data = [
+            'category' => [
+                'description' => 'Informátic'
+            ]
+        ];
+
+        $response = $this->put('/api/category/'.$this->category->id, $data);
+
+        $response->assertStatus(200);
+
+    }
+
+    public function testUpdateCategoryNotFound() {
+
+        $data = [
+            'category' => [
+                'description' => 'Informátic'
+            ]
+        ];
+        $response = $this->put('/api/category/11111', $data,  ['contentType' => 'application/json']);
+        $response->assertStatus(404);
+
     }
 }

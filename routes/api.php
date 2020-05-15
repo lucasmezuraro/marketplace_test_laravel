@@ -25,3 +25,4 @@ Route::delete('product/{id}', 'ProductController@destroy');
 
 Route::get('categories', 'CategoryController@index');
 Route::post('category', 'CategoryController@create');
+Route::put('category/{id}', 'CategoryController@update');

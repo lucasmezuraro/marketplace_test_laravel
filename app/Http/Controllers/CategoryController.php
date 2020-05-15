@@ -38,4 +38,34 @@ class CategoryController extends Controller
             return Response::json(['errors' => $validator->errors()->all()], 422);
         }
     }
+
+    public function update($id, Request $request) {
+        $rules = [
+            'category' => [
+                'required'
+            ]
+        ];
+
+        $category = Category::find($id);
+
+        if ($category) {
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->passes()) {
+                $category->fill($request->category)->save();
+                
+                if ($category->wasChanged()) {
+                    return Response::json(['message' => 'Category registrated with success!'], 200);
+                }else {
+                    return Response::json(['error' => 'category not changed'], 500);
+                }
+                
+            }else {
+                return Response::json(['errors' => $validator->errors()->all()], 422);
+            } 
+        }else {
+            return Response::json(['error' => 'category not found'], 404);
+        }
+        
+    }
 }
