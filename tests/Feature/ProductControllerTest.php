@@ -72,7 +72,7 @@ class ProductControllerTest extends TestCase
         $response->assertJsonFragment(['message' => 'product updated with success!']);
     }
 
-    public function testUpdateProductError() {
+    public function testUpdateProductNotChanged() {
         $data = [
             'product' => [
                 'description' => 'Computador 2'
@@ -81,5 +81,17 @@ class ProductControllerTest extends TestCase
 
         $response = $this->put('/api/product/1', $data);
         $response->assertJsonFragment(['error' => 'product not changed']);
+    }
+
+    public function testDestroyProduct() {
+
+        $response = $this->delete('/api/product/1');
+        $response->assertJsonFragment(['message' => 'product deleted with success!']);
+    }
+
+    public function testDestroyProductNotExists() {
+
+        $response = $this->delete('/api/product/11');
+        $response->assertJsonFragment(['error' => 'product not found']);
     }
 }

@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('products', 'ProductController@index');
 Route::post('product', 'ProductController@create');
 Route::put('product/{id}', 'ProductController@update');
+Route::delete('product/{id}', 'ProductController@destroy');
 
 Route::get('categories', 'CategoryController@index');
-
 Route::post('category', 'CategoryController@create');
