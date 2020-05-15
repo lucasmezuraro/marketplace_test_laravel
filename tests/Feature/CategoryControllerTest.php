@@ -79,4 +79,16 @@ class CategoryTest extends TestCase
         $response->assertStatus(404);
 
     }
+
+    public function testDestroyProduct() {
+
+        $response = $this->delete('/api/product/'.Category::first()->id);
+        $response->assertJsonFragment(['message' => 'product deleted with success!']);
+    }
+
+    public function testDestroyProductNotExists() {
+
+        $response = $this->delete('/api/product/111111');
+        $response->assertJsonFragment(['error' => 'product not found']);
+    }
 }

@@ -13,16 +13,15 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::group(['middleware' => ['json.response']], function () {
+    Route::get('products', 'ProductController@index');
+    Route::post('product', 'ProductController@create');
+    Route::put('product/{id}', 'ProductController@update');
+    Route::delete('product/{id}', 'ProductController@destroy');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    Route::get('categories', 'CategoryController@index');
+    Route::post('category', 'CategoryController@create');
+    Route::put('category/{id}', 'CategoryController@update');
+    Route::delete('category/{id}','CategoryController@delete');    
 });
 
-Route::get('products', 'ProductController@index');
-Route::post('product', 'ProductController@create');
-Route::put('product/{id}', 'ProductController@update');
-Route::delete('product/{id}', 'ProductController@destroy');
-
-Route::get('categories', 'CategoryController@index');
-Route::post('category', 'CategoryController@create');
-Route::put('category/{id}', 'CategoryController@update');
