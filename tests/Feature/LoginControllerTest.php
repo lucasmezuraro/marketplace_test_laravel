@@ -23,9 +23,7 @@ class LoginControllerTest extends TestCase
 
     protected $user;
 
-    public function setUp(): void {
-        parent::setUp();
-    }
+
 
 
     public function testLoginDenied() {
@@ -48,13 +46,19 @@ class LoginControllerTest extends TestCase
 
     public function testLoginProcess() {
 
-        $this->user = User::create([
+        User::create([
             'name' => 'user',
             'email' => 'user@user.com',
-            "password" => '123'
+            "password" => bcrypt('123')
         ]);
 
         $response = $this->post('/api/login', ['email' => 'user@user.com', 'password' => '123']);
+        $response->assertStatus(200);
+    }
+
+    public function testRegisterProcess() {
+
+        $response = $this->post('/api/register', ['name'=> 'user','email' => 'user10@user.com', 'password' => '123']);
         $response->assertStatus(200);
     }
 }
