@@ -6,11 +6,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 use App\Category;
 
 class CategoryTest extends TestCase
 {
+    use WithoutMiddleware;
     use DatabaseTransactions;
     
 
@@ -80,15 +82,15 @@ class CategoryTest extends TestCase
 
     }
 
-    public function testDestroyProduct() {
+    public function testDestroyCategory() {
 
-        $response = $this->delete('/api/product/'.Category::first()->id);
-        $response->assertJsonFragment(['message' => 'product deleted with success!']);
+        $response = $this->delete('/api/category/'.Category::first()->id);
+        $response->assertJsonFragment(['message' => 'category deleted with success!']);
     }
 
-    public function testDestroyProductNotExists() {
+    public function testDestroyCategoryNotExists() {
 
-        $response = $this->delete('/api/product/111111');
-        $response->assertJsonFragment(['error' => 'product not found']);
+        $response = $this->delete('/api/category/111111');
+        $response->assertJsonFragment(['error' => 'category not found']);
     }
 }

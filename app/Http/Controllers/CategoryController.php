@@ -68,4 +68,14 @@ class CategoryController extends Controller
         }
         
     }
+
+    public function destroy($id, Request $request) {
+        $category = Category::destroy($id);
+
+        if($category) {
+            return Response::json(['message' => 'category deleted with success!'], 200);
+        }else {
+            return Response::json(['error' => 'category not found'], 404);
+        }
+    }
 }

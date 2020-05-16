@@ -61,7 +61,7 @@ class ProductControllerTest extends TestCase
         $this->assertDatabaseHas('products', [
             'description' => 'Computador Positivo',
             'price' => 2199.95,
-            'category_id' => Category::first()->id
+            'category_id' => $this->category->id
         ]);
     }
 
