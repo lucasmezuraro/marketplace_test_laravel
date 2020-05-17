@@ -24,8 +24,6 @@ class LoginControllerTest extends TestCase
     protected $user;
 
 
-
-
     public function testLoginDenied() {
         $response = $this->post('/api/login', ['email' => 'email@email.com', 'password' => '1234']);
 
