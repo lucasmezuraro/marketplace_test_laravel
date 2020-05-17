@@ -16,6 +16,18 @@ class CustomerControllerTest extends TestCase
     use WithoutMiddleware;
     use DatabaseTransactions;
     
+    private $user;
+    
+    public function setUp(): void {
+        parent::setUp();
+
+        $this->user = User::create([
+            'name' => 'User',
+            'email' => 'user@user.com',
+            'password' => bcrypt(123)]);
+    }
+    
+    
     /**
      * A basic feature test example.
      *
@@ -23,18 +35,22 @@ class CustomerControllerTest extends TestCase
      */
     public function testCustomerRoute()
     {
-        $user = User::create([
-            'name' => 'User',
-            'email' => 'user@user.com',
-            'password' => bcrypt(123)]);
-        
+        $this->actingAs($this->user)->get('/api/my')->assertStatus(200);
+    }
+
+    public function testCustomerInsert() {
+
         Customer::create(
-            ['name' => $user->name,
+            ['name' => $this->user->name,
             'lastname' => 'test',
             'cpf' => '0120930193',
-            'user_id' => $user->id]
+            'user_id' => $this->user->id]
         );
 
-        $this->actingAs($user)->get('/api/my')->assertStatus(200);
+        $this->assertDatabaseHas('customers', ['lastname' => 'test']);
+    }
+
+    public function testCustomerRegistration() {
+        $this->actingAs($this->user)->post('/api/customer', ['name' => 'user', 'lastname' => 'test', 'cpf' => '0120930193'])->assertStatus(201);
     }
 }
