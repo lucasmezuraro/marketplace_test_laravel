@@ -35,5 +35,7 @@ Route::group(['middleware' => ['json.response', 'auth:api']], function () {
     
     
     Route::get('logout', 'LoginController@logout');
+
+    Route::get('my', 'CustomerController@index');
 });
 
