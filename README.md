@@ -11,7 +11,7 @@ The application is a api json that will serve like a simple backend of a SPA mar
 
 ## To start this application
 
-``shell
+``
 php artisan serve
 php artisan passport:install
 ``
@@ -19,7 +19,7 @@ php artisan passport:install
 
 ## To test
 
-``shell
+``
 php artisan test
 `` 
 
