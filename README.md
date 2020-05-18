@@ -28,6 +28,93 @@ php artisan test
 Don't forget that you will need set a database configuration for it
 
 
+## The Api routes 
+
+the routes are mapped to this uris. 
+
+``
+POST /api/login
+
+"Authentication Header" : "Bearer " + token
+
+{
+    "email": "user@user.com",
+    "password": "123"
+}
+``
+
+``
+POST /api/register
+
+{
+    "name": "user",
+    "email": "user@user.com",
+    "password": "123"
+}
+``
+
+``
+GET /api/logout
+``
+
+``
+GET /api/products
+``
+
+``
+POST /api/product
+
+{
+    "description": "Product",
+    "price" : 0.00,
+    "category_id": 1
+}
+``
+
+``
+PUT /api/product/{id}
+
+{
+    "description": "Change product",
+    "price" : 1.00,
+    "category_id": 1
+}
+``
+
+``
+DELETE /api/product/{id}
+``
+
+``
+GET /api/categories
+``
+
+``
+POST /api/category/{id}
+
+{
+    "description": "Informatics"
+}
+``
+
+``
+PUT /api/category/{id}
+{
+    "description": "Change category"
+}
+``
+
+``
+DELETE /api/category/{id}
+``
+
+
+
+
+
+
+
+
 
 
 
