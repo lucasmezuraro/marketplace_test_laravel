@@ -17,6 +17,7 @@ class CustomerControllerTest extends TestCase
     use DatabaseTransactions;
     
     private $user;
+    private $customer;
     
     public function setUp(): void {
         parent::setUp();
@@ -25,6 +26,12 @@ class CustomerControllerTest extends TestCase
             'name' => 'User',
             'email' => 'user@user.com',
             'password' => bcrypt(123)]);
+        $this->customer= Customer::create(
+                ['name' => $this->user->name,
+                'lastname' => 'test',
+                'cpf' => '0120930193',
+                'user_id' => $this->user->id]
+            );
     }
     
     
@@ -52,5 +59,9 @@ class CustomerControllerTest extends TestCase
 
     public function testCustomerRegistration() {
         $this->actingAs($this->user)->post('/api/customer', ['name' => 'user', 'lastname' => 'test', 'cpf' => '0120930193'])->assertStatus(201);
+    }
+
+    public function testUpdateCustomer() {
+        $this->actingAs($this->user)->put('/api/customer/'.$this->customer->id, ['name' => 'User 2'])->assertStatus(200);
     }
 }

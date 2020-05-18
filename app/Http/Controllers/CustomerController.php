@@ -52,4 +52,35 @@ class CustomerController extends Controller
 
         
     }
+
+    public function update($id, Request $request) {
+
+        $rules = [
+            'name' => 'sometimes',
+            'lastname' => 'sometimes',
+            'cpf' => 'sometimes', 
+        ];
+
+        $validator = Validator($request->all(), $rules);
+
+        if ($validator->passes()) {
+            $customer = Customer::find($id);
+            
+            if ($customer) {
+                $customer->fill($request->all())->save();
+                if ($customer->wasChanged()) {
+                    return Response::json(['message' => 'customer informations changed with success'], 200);
+                }else {
+                    return Response::json(['message' => 'customer informations not changed'], 500);
+                }
+                
+            }else {
+                return Response::json(['error' => 'customer not found'], 404);
+            }       
+
+            
+        }else {
+            return Response::json(['error' => $validator->errors()->all()], 422);
+        }
+    }
 }
