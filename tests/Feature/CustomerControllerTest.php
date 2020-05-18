@@ -64,4 +64,8 @@ class CustomerControllerTest extends TestCase
     public function testUpdateCustomer() {
         $this->actingAs($this->user)->put('/api/customer/'.$this->customer->id, ['name' => 'User 2'])->assertStatus(200);
     }
+
+    public function testDeleteCustomer() {
+        $this->actingAs($this->user)->delete('/api/customer/'.$this->customer->id)->assertStatus(200);
+    }
 }

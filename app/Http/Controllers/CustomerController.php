@@ -43,14 +43,10 @@ class CustomerController extends Controller
             }
             
             
-            
-
-
         }else {
             return Response::json(['error' => $validator->errors()->all()], 422);
         }
-
-        
+    
     }
 
     public function update($id, Request $request) {
@@ -82,5 +78,16 @@ class CustomerController extends Controller
         }else {
             return Response::json(['error' => $validator->errors()->all()], 422);
         }
+    }
+
+    public function destroy($id) {
+        try {
+            $customer = Customer::destroy($id);
+            return Response::json(['message' => 'Customer deleted with success!'], 200);
+
+        }catch (QueryException $q) {
+            return Response::json(['error' => $q->getMessage()], 200);
+        }
+
     }
 }

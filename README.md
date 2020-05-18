@@ -12,10 +12,10 @@ The application is a api json that will serve like a simple backend of a SPA mar
 ## To start this application
 
 ```
+compose update
 php artisan serve
-php artisan passport:install
 ```
-### Be attention, am using the official package laravel passport and for this work's we need install it before start everthing.
+### Be attention, you will need run the compose update command inside your project folder to load the dependencies of laravel.
 
 ## To test
 

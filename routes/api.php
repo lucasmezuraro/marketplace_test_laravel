@@ -39,5 +39,6 @@ Route::group(['middleware' => ['json.response', 'auth:api']], function () {
     Route::get('my', 'CustomerController@index');
     Route::post('customer', 'CustomerController@create');
     Route::put('customer/{id}', 'CustomerController@update');
+    Route::delete('customer/{id}', 'CustomerController@destroy');
 });
 
