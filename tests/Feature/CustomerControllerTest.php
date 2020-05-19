@@ -23,8 +23,8 @@ class CustomerControllerTest extends TestCase
         parent::setUp();
 
         $this->user = User::create([
-            'name' => 'User',
-            'email' => 'user@user.com',
+            'name' => 'User1',
+            'email' => 'user1@user.com',
             'password' => bcrypt(123)]);
         $this->customer= Customer::create(
                 ['name' => $this->user->name,

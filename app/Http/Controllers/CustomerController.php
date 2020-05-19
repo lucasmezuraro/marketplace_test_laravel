@@ -13,8 +13,7 @@ class CustomerController extends Controller
 {
 
     public function index() {
-        $id = Auth::user()->id;
-        return Response::json(['my' => Customer::find($id)]);
+        return Response::json(['my' => Customer::where(['user_id'=>Auth::user()->id])->get()]);
     }
 
     public function create(Request $request) {

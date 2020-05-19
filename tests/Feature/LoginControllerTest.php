@@ -45,12 +45,12 @@ class LoginControllerTest extends TestCase
     public function testLoginProcess() {
 
         User::create([
-            'name' => 'user',
-            'email' => 'user@user.com',
+            'name' => 'user2',
+            'email' => 'user2@user.com',
             "password" => bcrypt('123')
         ]);
 
-        $response = $this->post('/api/login', ['email' => 'user@user.com', 'password' => '123']);
+        $response = $this->post('/api/login', ['email' => 'user2@user.com', 'password' => '123']);
         $response->assertStatus(200);
     }
 
